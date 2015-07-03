@@ -130,7 +130,7 @@ for (var xx = 1 ; xx<= numberOfTdc; xx++) {
 stringTable.push("%\n");
 var bufStr = prepareData();
 for(g =0 ; g< bufStr.length;g++)
-	stringTable.push((bufStr.pop()).replace(',','\n')+'\n');
+	stringTable.push(bufStr.pop());
 
 //stringTable[stringTable.length-1].replace(",","\n");
 //the following two lines save the file
