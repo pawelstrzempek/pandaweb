@@ -61,24 +61,26 @@ function send(){
 		dataReadyFlag = 1;
 		//creating progress bar		
 		$( "#js-button-open" ).trigger( "click" );
-      jQuery('.modal-body').html(progress());		
+      		jQuery('.modal-body').html(progress());		
 	}	
 	
 	 if( i_send < cmdWordToSendTable.length){
 	 		var cb; 
-			getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
-			getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
+			//getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
+			//getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
+			getdata("./../commands/put.pl?"+cmdWordToSendTable[i_send],cb);
+			
 			var currentPercent = Number(((100 / cmdWordToSendTable.length)  * (i_send+1)).toFixed(1)); 
-    		jQuery('#progress-bar-1').css('width', currentPercent + "%");
-    		jQuery('#progress-bar-1').html(currentPercent+'% Complete (success)');
-	 	   jQuery('.modal-footer').html(  (cmdWordToSendTable[i_send].replace('-',' ')).replace('-',' '));
+    			jQuery('#progress-bar-1').css('width', currentPercent + "%");
+    			jQuery('#progress-bar-1').html(currentPercent+'% Complete (success)');
+	 	   	jQuery('.modal-footer').html(  (cmdWordToSendTable[i_send].replace('-',' ')).replace('-',' '));
 			//document.getElementById('log1').value+=  (cmdWordToSendTable[i_send].replace('-',' ')).replace('-',' ');
 			//document.getElementById('log1').value+='\n';		 	   
 			i_send++;
 	 	   
 	 	   setTimeout(function(){send();},1000);
 	 }
-	if(i_send >= cmdWordToSendTable.length-1)
+	//if(i_send >= cmdWordToSendTable.length-1)
 	//$( "#js-button-close" ).trigger( "click" );
 }
 
