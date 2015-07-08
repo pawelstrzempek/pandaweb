@@ -79,7 +79,7 @@ panel.prototype.get_input = function(type) {
     }
     
     if (type == 'cable') {
-        return '<input type="checkbox" '+checked+' class="input_cable_conn" name="cable_conn_'+this.n_plyta+'" value="asic_'+this.n_plyta+''+this.n_cable_conn+'" class="input1">';
+        return '<input type="checkbox" '+checked+' class="input_cable_conn" name="cable_conn_'+this.n_plyta+'" id="cable_conn_'+this.n_plyta+this.n_cable_conn+'" value="asic_'+this.n_plyta+''+this.n_cable_conn+'" class="input1">';
     }
     if (type == 'asic') {
         return '<input type="checkbox" '+checked+' name="asic_'+this.n_plyta+''+this.n_cable_conn+'" id="asic_'+this.n_plyta+''+this.n_cable_conn+this.n_asic+'" class="input1 asic-table">';

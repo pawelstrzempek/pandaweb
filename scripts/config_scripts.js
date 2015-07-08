@@ -129,7 +129,8 @@ for (var xx = 1 ; xx<= numberOfTdc; xx++) {
 
 stringTable.push("%\n");
 var bufStr = prepareData();
-for(g =0 ; g< bufStr.length;g++)
+
+while(bufStr.length != 0)
 	stringTable.push((bufStr.pop()).replace(',','\n')+'\n');
 
 //stringTable[stringTable.length-1].replace(",","\n");

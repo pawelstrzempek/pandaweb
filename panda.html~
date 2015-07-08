@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
     <script src="scripts/jquery-1.11.1.min.js">
     </script>
     <script src="scripts/bootstrap.min.js">
@@ -28,7 +28,7 @@
         <h2 class="header">
             Threshold Settings 
             <sub>
-                ver 2.1
+                ver 3.0
             </sub>
         </h2>
         <form acion="" id="form_board">
@@ -82,7 +82,7 @@
                             </button>
                         </td>
                         <td>
-                            <button type="button" onClick="send()" value="OK" class="submit">
+                            <button type="button" onClick="preSend()" value="OK" class="submit">
                                 <small>send settings to ASICs</small>
                             </button>
                         </td>
@@ -136,7 +136,7 @@
       
     </div>
   </div>    
-  <button type="button" id="js-button-open" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+  <button type="button" id="js-button-open" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="display:none">Open Modal</button>
     
     <script>
         document.getElementById('fileinput').addEventListener('change', loadConfigurationFile, false);

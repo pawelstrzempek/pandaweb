@@ -23,7 +23,7 @@ function prepareData(){
 		for(var yy=1 ; yy <= 3 ; yy++){//cable conn iteration for each tdc
 			for (var zz=1; zz<=2 ; zz++ ) {//iterating through asics 
 				var currentId = ''+xx+yy+zz;
-					if(document.getElementById("asic_"+currentId).checked == true){
+					if(document.getElementById("asic_"+currentId).checked == true && document.getElementById("cable_conn_"+xx+yy).checked == true){
 						registersValues = fabricCmdWord(currentId);
 						 for (var i =0; i < registersValues.length; i++) {//iterating through register value list and add header
 						var binaryString = "00000000000"+convertToBinary(yy-1,2)+"1010"+convertToBinary(zz,2)+"0"+convertToBinary(i,4)+registersValues[i];
@@ -37,7 +37,7 @@ function prepareData(){
 						document.getElementById('log1').value+=  (cmdWordToSend[i].replace('-',' ')).replace('-',' ');
 						document.getElementById('log1').value+='\n';
 						}
-					}								
+				}								
 			}
 		}
 	}				
@@ -69,6 +69,7 @@ function send(){
 			//getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
 			//getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
 			getdata("./../commands/put.pl?"+cmdWordToSendTable[i_send],cb);
+			
 			
 			var currentPercent = Number(((100 / cmdWordToSendTable.length)  * (i_send+1)).toFixed(1)); 
     			jQuery('#progress-bar-1').css('width', currentPercent + "%");
