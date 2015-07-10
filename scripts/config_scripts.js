@@ -130,9 +130,12 @@ for (var xx = 1 ; xx<= numberOfTdc; xx++) {
 stringTable.push("%\n");
 var bufStr = prepareData();
 
-while(bufStr.length != 0)
-	stringTable.push((bufStr.pop()).replace(',','\n')+'\n');
-
+while(bufStr.length != 0){
+	var temp = bufStr.pop()
+	temp.replace(',','\n')
+	temp = (temp.replace('-',' ')).replace('-',' ')
+	stringTable.push(temp + '\n');
+	}
 //stringTable[stringTable.length-1].replace(",","\n");
 //the following two lines save the file
 var blob = new Blob(stringTable, {type: "text/plain;charset=utf-8"});
