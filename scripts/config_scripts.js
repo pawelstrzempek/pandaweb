@@ -9,7 +9,7 @@ var numberOfTdc = 2;
       r.onload = function(e) { 
 	     var contents = e.target.result;
         var data = r.result;
-        data = data.substring(0, data.indexOf('%'));
+        //data = data.substring(0, data.indexOf('%'));  // here we remove the last part of the file
         var words = data.split('\n');            
         tdcAddr = words[10].split(','); 
         numberOfTdc = tdcAddr.length; 
@@ -17,7 +17,7 @@ var numberOfTdc = 2;
         var elem = document.getElementById("tdcAddrForm");
         elem.value = words[10];
         createPanel();//creating panel based on data read in from configuration file
-			//iterating through tdc's
+			//iterating through tdc's and setting all settings except the baselines which are taken form last part of the file
 			for (var j=0; j< numberOfTdc*8; j++) {
 				var dec = words[11+16*j].split(' ');//dec[2] contains id number
 				//var asicNb = dec[2].substr(dec[2].length-1, 1); //taking last digit
@@ -32,6 +32,7 @@ var numberOfTdc = 2;
 				//bars				
 				jQuery("#bar"+dec[2]+"0").val(words[18+16*j]);//threshold bar
 				jQuery("#bar"+dec[2]+"0value").val(words[18+16*j]);//threshold value field				
+				/*
 				jQuery("#bar"+dec[2]+"1").val(words[19+16*j]);//baseline1 bar
 				jQuery("#bar"+dec[2]+"1value").val(words[19+16*j]);//baseline1 value field				
 				jQuery("#bar"+dec[2]+"2").val(words[20+16*j]);//baseline2 bar
@@ -47,8 +48,63 @@ var numberOfTdc = 2;
 				jQuery("#bar"+dec[2]+"7").val(words[25+16*j]);//baseline7 bar
 				jQuery("#bar"+dec[2]+"7value").val(words[25+16*j]);//baseline7 value field				
 				jQuery("#bar"+dec[2]+"8").val(words[26+16*j]);//baseline8 bar
-				jQuery("#bar"+dec[2]+"8value").val(words[26+16*j]);//baseline8 value field				
-			}        
+				jQuery("#bar"+dec[2]+"8value").val(words[26+16*j]);//baseline8 value field			
+				*/	
+			}
+			
+			for (var j=1; j< numberOfTdc+1; j++) {
+				var n = 0;
+				for(k=0; k<words.length; k++)
+					if(words[k].indexOf(tdcAddr[j-1]+" 0xa000") != -1) {n = k;break;}
+				//we have 3 FEBs to update (6 ASICs).  Each ASIC has 8 channels. 
+				//#asic 1
+				var a1_it = n + 4; 
+				for(h =1; h<9; h++){
+					var bufStr = (words[a1_it+h-1]).slice(-2);
+					jQuery("#bar"+j+"11"+h).val((parseInt(bufStr,16)-15)*2);//baseline1 bar
+					jQuery("#bar"+j+"11"+h+"value").val((parseInt(bufStr,16)-15)*2);//baseline1 value field			
+					}				
+					
+				var a2_it = n + 4 + 12; 
+				for(h =1; h<9; h++){
+					var bufStr = (words[a2_it+h-1]).slice(-2);
+					jQuery("#bar"+j+"12"+h).val((parseInt(bufStr,16)-15)*2);//baseline1 bar
+					jQuery("#bar"+j+"12"+h+"value").val((parseInt(bufStr,16)-15)*2);//baseline1 value field						
+				}
+									
+				var a3_it = n + 4 + 24; 
+				for(h =1; h<9; h++){
+					var bufStr = (words[a3_it+h-1]).slice(-2);				
+					jQuery("#bar"+j+"21"+h).val((parseInt(bufStr,16)-15)*2);//baseline1 bar
+					jQuery("#bar"+j+"21"+h+"value").val((parseInt(bufStr,16)-15)*2);//baseline1 value field					
+				}
+
+				var a4_it = n + 4 + 36; 
+				for(h =1; h<9; h++){
+					var bufStr = (words[a4_it+h-1]).slice(-2);				
+					jQuery("#bar"+j+"22"+h).val((parseInt(bufStr,16)-15)*2);//baseline1 bar
+					jQuery("#bar"+j+"22"+h+"value").val((parseInt(bufStr,16)-15)*2);//baseline1 value field									
+				}
+
+				var a5_it = n + 4 + 48; 
+				for(h =1; h<9; h++){
+					var bufStr = (words[a5_it+h-1]).slice(-2);				
+					jQuery("#bar"+j+"31"+h).val((parseInt(bufStr,16)-15)*2);//baseline1 bar
+					jQuery("#bar"+j+"31"+h+"value").val((parseInt(bufStr,16)-15)*2);//baseline1 value field						
+				}
+
+				var a6_it = n + 4 + 60; 
+				for(h =1; h<9; h++){	
+					var bufStr = (words[a6_it+h-1]).slice(-2);				
+					jQuery("#bar"+j+"32"+h).val((parseInt(bufStr,16)-15)*2);//baseline1 bar
+					jQuery("#bar"+j+"32"+h+"value").val((parseInt(bufStr,16)-15)*2);//baseline1 value field				
+				}
+								
+				
+			}
+			
+			
+			        
       }
       r.readAsText(f);
     } else { 
@@ -128,12 +184,13 @@ for (var xx = 1 ; xx<= numberOfTdc; xx++) {
 }//iteration through tdc
 
 stringTable.push("%\n");
-var bufStr = prepareData();
+var bufStr = prepareData(true);
 
 while(bufStr.length != 0){
-	var temp = bufStr.pop()
-	temp.replace(',','\n')
-	temp = (temp.replace('-',' ')).replace('-',' ')
+	//bufStr.shift();  //give first element at the end of the array
+	var temp = bufStr.shift();
+	temp.replace(',','\n');
+	temp = (temp.replace('-',' ')).replace('-',' ');
 	stringTable.push(temp + '\n');
 	}
 //stringTable[stringTable.length-1].replace(",","\n");

@@ -14,7 +14,7 @@ var cmdWordToSendTable = [];
 var dataReadyFlag = 0;
 var i_send = 0;
 
-function prepareData(){
+function prepareData(ignoreSelection = false){
 	var registersValues = [];//array storing 12 registers values for one asic
 	var cmdWordToSend = [];
 	var cmdWordToSendTable_local = [];
@@ -23,7 +23,7 @@ function prepareData(){
 		for(var yy=1 ; yy <= 3 ; yy++){//cable conn iteration for each tdc
 			for (var zz=1; zz<=2 ; zz++ ) {//iterating through asics 
 				var currentId = ''+xx+yy+zz;
-					if(document.getElementById("asic_"+currentId).checked == true && document.getElementById("cable_conn_"+xx+yy).checked == true){
+					if((document.getElementById("asic_"+currentId).checked == true && document.getElementById("cable_conn_"+xx+yy).checked == true) || ignoreSelection){
 						registersValues = fabricCmdWord(currentId);
 						 for (var i =0; i < registersValues.length; i++) {//iterating through register value list and add header
 						var binaryString = "00000000000"+convertToBinary(yy-1,2)+"1010"+convertToBinary(zz,2)+"0"+convertToBinary(i,4)+registersValues[i];

@@ -68,7 +68,8 @@ function send(){
 	 		var cb; 
 			//getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
 			//getdata("./../commands/put.pl?"+cmdWordToSend[i],cb);
-			//getdata("./../commands/put.pl?"+cmdWordToSendTable[i_send],cb);
+			getdata("./../commands/put.pl?"+cmdWordToSendTable[i_send],cb);
+			
 			
 			var currentPercent = Number(((100 / cmdWordToSendTable.length)  * (i_send+1)).toFixed(1)); 
     			jQuery('#progress-bar-1').css('width', currentPercent + "%");
