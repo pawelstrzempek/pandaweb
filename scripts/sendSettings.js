@@ -14,7 +14,7 @@ var cmdWordToSendTable = [];
 var dataReadyFlag = 0;
 var i_send = 0;
 
-function prepareData(ignoreSelection = false){
+function prepareData(ignoreSelection){
 	var registersValues = [];//array storing 12 registers values for one asic
 	var cmdWordToSend = [];
 	var cmdWordToSendTable_local = [];
@@ -57,7 +57,7 @@ function prepareData(ignoreSelection = false){
 function send(){
 	
 	if (dataReadyFlag == 0){
-		cmdWordToSendTable = prepareData();
+		cmdWordToSendTable = prepareData(false);
 		dataReadyFlag = 1;
 		//creating progress bar		
 		$( "#js-button-open" ).trigger( "click" );
@@ -305,7 +305,8 @@ function resetAsic(){
   for (var xx = 1 ; xx<= numberOfTdc; xx++) {//tdc iteration
 		for(var yy=1 ; yy <= 4 ; yy++){//cable conn iteration for each tdc
   			var currentId = ''+xx+yy;
-					if(document.getElementById("asic_"+currentId+"1").checked == true || document.getElementById("asic_"+currentId+"2").checked == true){//we check whether asic 1 or 2 check box is selected
+//					if(document.getElementById("asic_"+currentId+"1").checked == true || document.getElementById("asic_"+currentId+"2").checked == true){//we check whether asic 1 or 2 check box is selected
+					if((document.getElementById("asic_"+currentId+"1").checked == true  || document.getElementById("asic_"+currentId+"2").checked == true) && document.getElementById("cable_conn_"+xx+yy).checked == true ){
 						var binaryString = "00000000001"+convertToBinary(yy-1,2)+"0000"+"00"+"0"+"0000"+"00000000";
 						var board_addr = "0x"+ tdcAddr[xx-1];
 						cmdWordToSend = board_addr+"-"+"0xa000-"+"0x"+parseInt(binaryString,2).toString(16);						
